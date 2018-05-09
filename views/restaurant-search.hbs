@@ -1,0 +1,43 @@
+
+{{#if user}}
+  <h1>HELLO {{user.username}}</h1>
+{{/if}}
+
+{{#unless user}}
+<h2>You are not logged in</h2>
+{{/unless}}
+
+
+<h2>Search Restaurants</h2>
+
+<div id="form-container">
+  <div>
+    <label for="restaurant-name">Name of the restaurant</label>
+    <input id="restaurant-name" type="text" name="restaurant-name" placeholder="Italian place">
+  </div>
+  <br>
+  <div>
+    <label for="location">Location</label>
+    <input id="location" type="text" name="location" placeholder="address, city, and/or zip code">
+  </div>
+
+  {{#if message}}
+    <br>
+    <div class="error-message">{{ message }}</div>
+  {{/if}}
+
+  <br><br>
+
+  <button type="button" id="get-restaurants">Look for restaurants</button>
+
+</div>
+
+
+<div class="restaurant-list-container">
+
+  
+  
+  
+</div>
+
+
