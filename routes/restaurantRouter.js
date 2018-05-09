@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express        = require('express');
 const router         = express.Router();
 const User           = require("../models/user");
@@ -25,7 +27,7 @@ router.get('/restaurant-search', (req, res, next) => {
 router.get('/search/restaurants/:theTerm/:theLocation', (req,res,next) =>{
 
 
-  const apiKey = 'HNg-HmXwymizCIqWdt0SaxiQL6-IvKha9xjF76DuFXCcmb0MrZPz06OcejVqNXTSSZKwFtxYbYdu04CwGJDCnnNocVAS8E_k0e6UH7tdBiCOxr8L_uEH1i1cS57wWnYx';
+  const apiKey = process.env.API_KEY;
   
   const searchRequest = {};
   
@@ -51,22 +53,57 @@ router.get('/search/restaurants/:theTerm/:theLocation', (req,res,next) =>{
 
 
 // /restaurant/:id/:name/:alias/:phone/:address/:city/:zip
-router.get('/restaurant/:id', (req, res, next) => {
+router.get('/restaurant&&:id&&:name&&:alias&&:phone&&:address&&:city&&:zip', (req, res, next) => {
   const data = {};
   // if a user is logged in
   if(req.user){
     data.user = req.user;
+    data.user_id = req.user._id;
   }
   data.restaurantId = req.params.id;
-  // data.restaurantName = req.params.name;
-  // data.restaurantAlias = req.params.alias;
-  // data.restaurantPhone = req.params.phone;
-  // data.restaurantAddress = req.params.address;
-  // data.restaurantCity = req.params.city;
-  // data.restaurantZipCode = req.params.zip;
+  data.restaurantName = req.params.name;
+  data.restaurantAlias = req.params.alias;
+  data.restaurantPhone = req.params.phone;
+  data.restaurantAddress = req.params.address;
+  data.restaurantCity = req.params.city;
+  data.restaurantZipCode = req.params.zip;
+
+
+
+
+
+//FINDING ALL TIPS NOW, NEED TO MAKE IT SO THAT THEY ARE ONLY THE ONES FROM THIS RESTAURANT.
+
+  data.tips = [];
+  Tip.find({restaurant_id: data.restaurantId})
+  .then(response => {
+    response.map(tip => {
+
+      const tipToAdd = {};
+      Object.assign(tipToAdd, tip._doc);
+      
+      if(JSON.stringify(tipToAdd.owner_id) == JSON.stringify(data.user_id)){
+        tipToAdd.OWNER = true;
+      } 
+
+      data.tips.push(tipToAdd)
+
+    });
+
+    res.render('restaurant', data);
+  })
+  .catch(err=>console.log(err))
+
+
+
+
+
+
+
+
   
 
-  res.render('restaurant-single', data);
+
 });
 
 

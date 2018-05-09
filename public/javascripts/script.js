@@ -14,24 +14,6 @@ $('#get-restaurants').click(function(){
     .then((response) => {
       console.log('response.data: ', response.data);
 
-      // const firstResult = response.jsonBody.businesses[0];
-      // const prettyJson = JSON.stringify(firstResult, null, 4);
-      // console.log(prettyJson);
-      // const businesses = response.jsonBody.businesses;
-
-
-
-//////this is unecessary
-      // const businesses = response.data;
-      // businesses.forEach(business => {
-    
-      //   const prettyJson = JSON.stringify(business, null, 4);
-      //   console.log('prettyJson: ', prettyJson);
-        
-      // });
-
-
-
 
       $('.restaurant-list-container').empty();
       response.data.forEach(eachRestaurant => {
@@ -59,7 +41,7 @@ $('#get-restaurants').click(function(){
           </div>
           <p> 
             Are they out of something? 
-            <form action="/restaurant/${theId}" method="POST" class="form-container">
+            <form action="/restaurant&&${theId}&&${theName}&&${theAlias}&&${thePhone}&&${theAddress}&&${theCity}&&${theZipCode}" method="GET" class="form-container">
               <input type="submit" value="Let everyone know!">
             </form>
           </p>
