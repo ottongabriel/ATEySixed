@@ -1,3 +1,5 @@
+<div id="logged-in-user-id" theid="{{user_id}}"></div>
+
 
 <div class="restaurant-info">
   <h2 class="name">Name: {{restaurantName}}</h2>
@@ -29,8 +31,8 @@
 <section class="tip-business">
 
 
-
-  <h2>Create a tip!</h2>
+  {{#if user}}
+  <h2>Add a tip!</h2>
 
   <form action="/add-new-tip" method="POST" id="form-container">
     <div>
@@ -49,23 +51,37 @@
     <button>Add tip</button>
 
   </form>
+  {{/if}}
 
   <h1>All tips</h1>
 
   {{#each tips}}
-  <h3>{{this.item}}</h3>
+    <h3>{{this.item}}</h3>
 
-  {{#if this.OWNER}}
-  <p>you <b>------POSTED-----</b> this one</p>
-  <form action="/delete-tip/{{this._id}}" method="POST">
-    <button>Delete tip</button>
-  </form>
+    {{#if this.OWNER}}
+      <p>you <b>------POSTED-----</b> this one</p>
+      <form action="/delete-tip/{{this._id}}" method="POST">
+        <button>Delete tip</button>
+      </form>
+
+    {{/if}}
+
+    {{#unless this.OWNER}}
+    {{#if this.loggedInUser}}
+      <p>you did not post this one</p>
 
 
-  {{/if}}
+        <button class="corroborate btn btn-warning" tipid="{{this._id}}" ownerid="{{this.owner_id}}">Is it True?</button>
+      
+    {{/if}}
+    {{/unless}}
 
-  {{#unless this.OWNER}}
-  <p>you did not post this one</p>
-  {{/unless}}
+    <p>Corroborations: 
+      <span class="corroboration-counter" fortip="{{this._id}}">
+        0
+      </span>
+    </p>
   {{/each}}
 </section>
+
+

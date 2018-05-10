@@ -86,6 +86,9 @@ router.get('/restaurant&&:id&&:name&&:alias&&:phone&&:address&&:city&&:zip', (re
         tipToAdd.OWNER = true;
       } 
 
+      if(req.user){
+        tipToAdd.loggedInUser = req.user._id;
+      }
       data.tips.push(tipToAdd)
 
     });

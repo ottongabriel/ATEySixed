@@ -61,7 +61,9 @@
 
 {{!-- project's JS --}}
     <script src="javascripts/script.js"></script>
-    <script src="javascripts/get_tips.js"></script>
-    {{!-- <script src="../public/javascripts/get_tips.js" ></script> --}}
+{{#if tips}}
+    <script src="javascripts/get_corrobs.js"></script>
+{{/if}}
+
   </body>
 </html>

@@ -1,5 +1,6 @@
 const express        = require('express');
 const router         = express.Router();
+const mongoose       = require('mongoose');
 const User           = require("../models/user");
 const Tip            = require("../models/tip");
 const Corroboration  = require("../models/corroboration");
@@ -61,7 +62,7 @@ router.get('/test-new-tip', ensureLogin.ensureLoggedIn(), (req, res, next) => {
 
 
 
-////////////////////////////////TEST NEW TIP
+////////////////////////////////working NEW TIP
 router.post('/add-new-tip', ensureLogin.ensureLoggedIn(), (req, res, next) => {
   const item = req.body.item;
   const the_id = req.body.the_id;
@@ -90,11 +91,40 @@ router.post('/add-new-tip', ensureLogin.ensureLoggedIn(), (req, res, next) => {
     owner_id: owner_id,
     });
 
-  newTip.save((err) => {
+  newTip.save( (err) => {
     if (err) {
       res.render("restaurant", { message: "Something went wrong adding your tip" });
-    } else {
-      res.redirect('back');
+    } 
+    else {
+
+
+      const newCorroboration = new Corroboration({
+        corroborated: true,
+        tip_id: newTip._id,
+        owner_id: newTip.owner_id,
+      })
+
+      newCorroboration.save((err) => {
+        if (err) {
+          //resrender problem here
+          res.render("restaurant", { message: "Something went wrong adding the CORROBORATION for your tip" });
+
+        }
+        else{
+          // here is where the magic happens
+          res.redirect('back');
+
+
+        }
+
+
+      })
+
+
+
+
+
+
     }
   });
 });
@@ -123,14 +153,89 @@ router.post('/delete-tip/:id', (req, res, next) => {
 
 
 
+// &&:owner_id => took this out of the string
+router.post('/corroboration/:tip_id', ensureLogin.ensureLoggedIn(), (req, res, next) => {
+  // first thing to do for testing
+  // res.send("hello world");
+  
+  const tipId = req.params.tip_id;
+  const ownerId = req.user._id;
+  
+  
+
+  Corroboration.findOne(
+    { 
+      $and: [ 
+        { tip_id: tipId }, 
+        { owner_id: ownerId } 
+      ] 
+    }
+  )
+  .then(theCorroboration =>{
+
+
+    // the corroboratio relationship already exists
+    if (theCorroboration !== null) {
+      console.log("it does exist already");
+
+      theCorroboration.corroborated = !theCorroboration.corroborated;
+
+      theCorroboration.save((error) => {
+        if (error) {
+          res.redirect("back", { message: "the tip exists, but there was an issue updating it" });
+        }
+        else{
+          // here is where the magic happens
+          // res.redirect('back');
+        }
+      })
+
+      return;
+    }
+    // then it doesnt exist and it needs to be created
+
+    const newCorroboration = new Corroboration({
+      corroborated: true,
+      tip_id: tipId,
+      owner_id: ownerId,
+    });
+
+    newCorroboration.save((error) => {
+      if (error) {
+        //resrender problem here
+        res.redirect("back", { message: "Something went wrong adding the CORROBORATION for that tip" });
+      }
+      else{
+        return;
+        // here is where the magic happens
+        // res.redirect('back');
+      }
+    })
+
+
+
+
+  })
+  .catch(err=>{
+    console.log("there was an issue");
+  })
+
+
+});//end the /create/update of the corroboration
+
+
+
+
+
+
 
 ////// THIS IS THE JSON LINE EVERYTHING AFTER HERE BELONGS TO THE JSON KINGDOM
 
 
 // THIS IS A TEST TO GET ALL OF THE TIPS ON A JSON CALL
-router.get('/get-all-tips', (req, res, next) => {
+router.get('/get-corroborations/:tipId', (req, res, next) => {
 
-  Tip.find()
+  Corroboration.find({tip_id: req.params.tipId})
   .then(theList=>{
     // need to pass multiple things here
     res.json(theList)
