@@ -1,31 +1,39 @@
-<h2>Log in</h2>
 
-<form action="/login" method="POST" id="form-container">
-  <div>
-    <label for="username">Username:</label>
-    <input type="text" name="username">
-  </div>
-  <br>
-  <div>
-    <label for="password">Password:</label>
-    <input type="password" name="password">
-  </div>
-  {{#if message}}
-    <br>
-    <div class="error-message">{{ message }}</div>
-  {{/if}}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3 col-sm-offset-4">
+          <h2>Log In</h2>
 
-  <br><br>
-  <div>
-    <input type="submit" value="Log In">
-  </div>
+          <form action="/login" method="POST" class="form-group" id="form-container">
+            <div>
+              <label for="username">Username:</label>
+              <input type="text" class="form-control" name="username">
+            </div>
+            <br>
+            <div>
+              <label for="password">Password:</label>
+              <input type="password" class="form-control" name="password">
+            </div>
+            {{#if message}}
+              <br>
+              <div class="error-message">{{ message }}</div>
+            {{/if}}
 
-  <br>
+            <br><br>
+            <div>
+              <input class="btn btn-primary" type="submit" value="Log In">
+            </div>
 
-  <p class="account-message">
-    Don't have an account? <a href="/signup">Sign up</a>
-  </p>
+            <br>
 
-  <br><br>
-  <a href="/">Go Home</a>
-</form>
+            <p class="account-message">
+              Don't have an account? <a href="/signup">Sign up</a>
+            </p>
+
+            <br><br>
+            <a href="/">Go Home</a>
+          </form>
+
+        </div>
+    </div>
+</div>

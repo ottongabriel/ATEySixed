@@ -1,6 +1,8 @@
 
 
-
+*{
+  color: #333;
+}
 
 /////////////////THIS IS THE NAME FOR THE CLASS FOR THE IMAGES BEING PULLED IN BY YELP!!!
 .business-img{
@@ -10,13 +12,18 @@
 
 
 
+.error-message{
+  background-color:rgba(255,255,0,0.3);
+  padding: 10px;
+  border-radius: 6px;
+  width: fit-content;
+}
 
 
 
-
-
-
-
+a{
+  text-decoration: none;
+}
 
 
 
@@ -41,6 +48,9 @@ footer {
   width: 100%;
   text-align: right;
   padding: 23px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
 }
 
 ul {
@@ -83,7 +93,7 @@ ul li a:hover {
   justify-content: space-around;
   align-items: center;
   height: 48px;
-  margin-bottom: 45px;
+  // margin-bottom: 45px;
 }
 
 
@@ -94,10 +104,11 @@ ul li a:hover {
 
 .hero {
   background-image: url(../images/icon-plate.png);
-  height: 500px;
+  height: 450px;
   background-size: 250px;
   background-repeat: no-repeat;
   background-position: center;
+  margin-top: 20px;
 }
 
 .siteName {
@@ -114,6 +125,8 @@ ul li a:hover {
 .about-block {
   background-color: #F5F5F5;
   height: 500px;
+  padding: 5vh 20vw;
+  text-align: center;
 }
 .next-block {
     background-color: #ffffff;

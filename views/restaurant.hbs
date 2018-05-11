@@ -1,6 +1,11 @@
 <div id="logged-in-user-id" theid="{{user_id}}"></div>
 
 
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+
+
 <div class="restaurant-info">
   <h2 class="name">Name: {{restaurantName}}</h2>
   <div class="alias">alias: {{restaurantAlias}}</div>
@@ -22,22 +27,14 @@
 
 
 
-
-
-
-
-
-
-<section class="tip-business">
-
-
   {{#if user}}
   <h2>Add a tip!</h2>
 
   <form action="/add-new-tip" method="POST" id="form-container">
     <div>
       <label for="item">Item they are out of</label>
-      <input id="item" type="text" name="item" placeholder="French fries">  <input type="hidden" name="the_id" value={{restaurantId}}>
+      <input id="item" type="text" name="item" placeholder="French fries" maxlength="25">  
+      <input type="hidden" name="the_id" value={{restaurantId}}>
     </div>
     <br>
 
@@ -53,20 +50,102 @@
   </form>
   {{/if}}
 
+
+  {{#unless user}}
+    <h2>Are they out of something and you want to let everyone know? <a href="/signup">Make an Account!</a></h2>
+    
+  {{/unless}}
+
+
+
+
+        </div>
+    </div>
+</div>
+{{!-- end bootstrap container --}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="tip-business">
+
   <h1>All tips</h1>
 
   {{#each tips}}
-    <h3>they were out of <h2>{{this.item}}</h2></h3>
-    <h4>{{this.created_at}}</h4>
 
-    {{#if this.OWNER}}
-      <p>you <b>------POSTED-----</b> this one</p>
+
+
+    <div class="card" style="width: 18rem;">
+      {{!-- <img class="card-img-top" src="..." alt="Card image cap"> --}}
+      <div class="card-body">
+        <p>they were out of</p>
+        <h5 class="card-title">{{this.item}}</h5>
+        <p class="card-text">{{this.created_at}}</p>
+
+
+        {{#if this.OWNER}}
+        {{!-- <p>you <b>------POSTED-----</b> this one</p> --}}
+        <form action="/delete-tip/{{this._id}}" method="POST">
+          <button class="btn btn-primary">Delete tip</button>
+        </form>
+        {{/if}}
+
+
+
+        {{#unless this.OWNER}}
+        {{#if this.loggedInUser}}
+
+          <button class="corroborate btn btn-warning" tipid="{{this._id}}" ownerid="{{this.owner_id}}">Is it True?</button>
+      
+        {{/if}}
+        {{/unless}}
+
+
+        <p>Corroborations: 
+          <span class="corroboration-counter" fortip="{{this._id}}">
+            0
+          </span>
+        </p>
+
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+
+
+  {{/each}}
+
+
+
+
+
+
+
+
+
+
+    {{!-- <h3>they were out of <h2>{{this.item}}</h2></h3>
+    <h4>{{this.created_at}}</h4> --}}
+
+    {{!-- {{#if this.OWNER}}
+      {{!-- <p>you <b>------POSTED-----</b> this one</p> --}}
       <form action="/delete-tip/{{this._id}}" method="POST">
         <button>Delete tip</button>
       </form>
 
-    {{/if}}
-
+    {{/if}} --}}
+{{!-- 
     {{#unless this.OWNER}}
     {{#if this.loggedInUser}}
       <p>you did not post this one</p>
@@ -75,17 +154,14 @@
         <button class="corroborate btn btn-warning" tipid="{{this._id}}" ownerid="{{this.owner_id}}">Is it True?</button>
       
     {{/if}}
-    {{/unless}}
+    {{/unless}} --}}
 
-    <p>Corroborations: 
+    {{!-- <p>Corroborations: 
       <span class="corroboration-counter" fortip="{{this._id}}">
         0
       </span>
     </p>
-  {{/each}}
+  {{/each}} --}}
 </section>
 
 
-<footer>
-  
-</footer>

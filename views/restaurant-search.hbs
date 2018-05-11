@@ -1,36 +1,61 @@
 
-{{#if user}}
-  <h1>HELLO {{user.username}}</h1>
-{{/if}}
-
-{{!-- {{#unless user}} --}}
-{{!-- <h2>You are not logged in</h2> --}}
-{{!-- {{/unless}} --}}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
 
 
-<h2>Search Restaurants</h2>
+          {{#if user}}
+            <h1>HELLO {{user.username}}</h1>
+          {{/if}}
 
-<div id="form-container">
-  <div>
-    <label for="restaurant-name">Name of the restaurant</label>
-    <input id="restaurant-name" type="text" name="restaurant-name" placeholder="Italian place">
-  </div>
-  <br>
-  <div>
-    <label for="location">Location</label>
-    <input id="location" type="text" name="location" placeholder="address, city, and/or zip code">
-  </div>
 
-  {{#if message}}
-    <br>
-    <div class="error-message">{{ message }}</div>
-  {{/if}}
 
-  <br><br>
+          <h2>Search Restaurants</h2>
 
-  <button type="button" id="get-restaurants">Look for restaurants</button>
+          <div id="form-container" class="form-group">
+            <div>
+              <label for="restaurant-name">Name of the restaurant</label>
+              <input id="restaurant-name" class="form-control" type="text" name="restaurant-name" placeholder="Italian place">
+            </div>
+            <br>
+            <div>
+              <label for="location">Location</label>
+              <input id="location" class="form-control" type="text" name="location" placeholder="address, city, and/or zip code">
+            </div>
 
+            {{#if message}}
+              <br>
+              <div class="error-message">{{ message }}</div>
+            {{/if}}
+
+            <br><br>
+
+            <button class="btn btn-primary" type="button" id="get-restaurants">Look for restaurants</button>
+
+          </div>
+
+        </div>
+    </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <div class="restaurant-list-container">
@@ -39,6 +64,5 @@
   
   
 </div>
-
 
 
