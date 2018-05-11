@@ -33,7 +33,7 @@ $('#get-restaurants').click(function(event){
         
           <div class="restaurant-info">
             <img class="business-img" src="${thImage}">
-            <h2 class="name">Name: ${theName}</h2>
+            <h2 class="name">${theName}</h2>
             <div class="phone">Phone number: ${thePhone}</div>
             <div class="address">Address:
               <p class="tabbed">${theAddress}</p>
