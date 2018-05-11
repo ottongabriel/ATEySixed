@@ -28,18 +28,18 @@ $('#get-restaurants').click(function(event){
 
 
         $('.restaurant-list-container').append(`
+
+        <div class="col-sm-4 ogf-margin-5">
         
           <div class="restaurant-info">
             <img class="business-img" src="${thImage}">
             <h2 class="name">Name: ${theName}</h2>
-            <div class="alias">alias: ${theAlias}</div>
             <div class="phone">Phone number: ${thePhone}</div>
             <div class="address">Address:
               <p class="tabbed">${theAddress}</p>
               <p class="tabbed">${theCity}</p>
               <p class="tabbed">${theZipCode}</p>
             </div>
-            <div class="the _id">${theId}</div>
           </div>
           <p> 
             Are they out of something? 
@@ -49,6 +49,8 @@ $('#get-restaurants').click(function(event){
           </p>
 
           </br></br>
+
+        </div>
         
         `)
 

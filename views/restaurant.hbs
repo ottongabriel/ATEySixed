@@ -7,15 +7,17 @@
 
 
 <div class="restaurant-info">
-  <h2 class="name">Name: {{restaurantName}}</h2>
-  <div class="alias">alias: {{restaurantAlias}}</div>
-  <div class="phone">Phone number: {{restaurantPhone}}</div>
-  <div class="address">Address:
-    <p class="tabbed">{{restaurantAddress}}</p>
-    <p class="tabbed">{{restaurantCity}}</p>
-    <p class="tabbed">{{restaurantZipCode}}</p>
-  </div>
-  <div class="the_id">{{restaurantId}}</div>
+  <h1 class="name">{{restaurantName}}</h1>
+  {{!-- <div class="alias">Alias: {{restaurantAlias}}</div> --}}
+  <h4>
+    <div class="address">Address:
+      <p class="tabbed">{{restaurantAddress}}</p>
+      <p class="tabbed">{{restaurantCity}}</p>
+      <p class="tabbed">{{restaurantZipCode}}</p>
+      <div class="phone">Phone number: {{restaurantPhone}}</div>
+    </div>
+  </h4>
+  {{!-- <div class="the_id">{{restaurantId}}</div> --}}
 </div>
 
 <div class="on-single-restaurant-page">
@@ -52,7 +54,8 @@
 
 
   {{#unless user}}
-    <h2>Are they out of something and you want to let everyone know? <a href="/signup">Make an Account!</a></h2>
+    <h3 class="text-center">Do you know something we don't? </h3>
+    <h3 class="text-center"><a href="/signup">Make an Account</a> and let us know!</h3>
     
   {{/unless}}
 
@@ -67,101 +70,75 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 <section class="tip-business">
 
-  <h1>All tips</h1>
+  {{#if tips}}
+  <h1 class="text-center ogf-margin-5">All tips</h1>
+  {{/if}}
+
+  {{#unless tips}}
+    <br><br>
+    <h4 class="text-center ogf-margin-5">It seems no one has told us anything yet</h1>
+  {{/unless}}
+
+  <div class="container">
+    <div class="row">
 
   {{#each tips}}
 
 
+        <div class="col-sm-4 ogf-margin-5">
 
-    <div class="card" style="width: 18rem;">
-      {{!-- <img class="card-img-top" src="..." alt="Card image cap"> --}}
-      <div class="card-body">
-        <p>they were out of</p>
-        <h5 class="card-title">{{this.item}}</h5>
-        <p class="card-text">{{this.created_at}}</p>
-
-
-        {{#if this.OWNER}}
-        {{!-- <p>you <b>------POSTED-----</b> this one</p> --}}
-        <form action="/delete-tip/{{this._id}}" method="POST">
-          <button class="btn btn-primary">Delete tip</button>
-        </form>
-        {{/if}}
+          <div class="card" style="width: 60rem;">
+            {{!-- <img class="card-img-top" src="..." alt="Card image cap"> --}}
+            <div class="card-body">
+              <h4>they were out of:</h4>
+              <h2 class="card-title">{{this.item}}</h2>
+              <p class="card-text">{{this.created_at}}</p>
 
 
-
-        {{#unless this.OWNER}}
-        {{#if this.loggedInUser}}
-
-          <button class="corroborate btn btn-warning" tipid="{{this._id}}" ownerid="{{this.owner_id}}">Is it True?</button>
-      
-        {{/if}}
-        {{/unless}}
+              {{#if this.OWNER}}
+              {{!-- <p>you <b>------POSTED-----</b> this one</p> --}}
+              <form action="/delete-tip/{{this._id}}" method="POST">
+                <button class="btn btn-primary">Delete tip</button>
+              </form>
+              {{/if}}
 
 
-        <p>Corroborations: 
-          <span class="corroboration-counter" fortip="{{this._id}}">
-            0
-          </span>
-        </p>
 
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
-    </div>
+              {{#unless this.OWNER}}
+              {{#if this.loggedInUser}}
+
+                <button class="corroborate btn btn-warning" tipid="{{this._id}}" ownerid="{{this.owner_id}}">Is it True?</button>
+            
+              {{/if}}
+              {{/unless}}
+
+
+              <p>Corroborations:
+                <span class="corroboration-counter" fortip="{{this._id}}">
+                  0
+                </span>
+              </p>
+
+            </div>
+          </div>
+
+        </div>
+
+
+
 
 
   {{/each}}
 
 
+    </div>
+  </div>
 
 
 
 
 
-
-
-
-    {{!-- <h3>they were out of <h2>{{this.item}}</h2></h3>
-    <h4>{{this.created_at}}</h4> --}}
-
-    {{!-- {{#if this.OWNER}}
-      {{!-- <p>you <b>------POSTED-----</b> this one</p> --}}
-      <form action="/delete-tip/{{this._id}}" method="POST">
-        <button>Delete tip</button>
-      </form>
-
-    {{/if}} --}}
-{{!-- 
-    {{#unless this.OWNER}}
-    {{#if this.loggedInUser}}
-      <p>you did not post this one</p>
-
-
-        <button class="corroborate btn btn-warning" tipid="{{this._id}}" ownerid="{{this.owner_id}}">Is it True?</button>
-      
-    {{/if}}
-    {{/unless}} --}}
-
-    {{!-- <p>Corroborations: 
-      <span class="corroboration-counter" fortip="{{this._id}}">
-        0
-      </span>
-    </p>
-  {{/each}} --}}
 </section>
-
 

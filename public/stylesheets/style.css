@@ -14,11 +14,26 @@
 a {
   text-decoration: none; }
 
+.ogf-margin-5 {
+  margin-top: 20px;
+  margin-bottom: 60px; }
+
+.corroboration-counter {
+  color: tomato;
+  font-size: 30px; }
+
+.add-margin-top {
+  margin-top: 40px; }
+
 body {
   width: 100%;
   margin: 0 auto;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   overflow-x: hidden; }
+
+.tabbed {
+  text-indent: 20px;
+  margin: 0px; }
 
 footer {
   background-color: #F2F2F2;
