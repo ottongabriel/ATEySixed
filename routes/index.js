@@ -80,7 +80,6 @@ router.post('/add-new-tip', ensureLogin.ensureLoggedIn(), (req, res, next) => {
   }
 
   if (item === "") {
-    res.render("restaurant", { message: "Tell us what they are out of!" });
     return;
   }
 

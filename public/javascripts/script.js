@@ -44,7 +44,7 @@ $('#get-restaurants').click(function(event){
           <p> 
             Are they out of something? 
             <form action="/restaurant&&${theId}&&${theName}&&${theAlias}&&${thePhone}&&${theAddress}&&${theCity}&&${theZipCode}" method="GET" class="form-container">
-              <input type="submit" value="Click to find out!">
+              <input class="btn btn-info" type="submit" value="Click to find out!">
             </form>
           </p>
 
