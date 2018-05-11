@@ -56,7 +56,8 @@
   <h1>All tips</h1>
 
   {{#each tips}}
-    <h3>{{this.item}}</h3>
+    <h3>they were out of <h2>{{this.item}}</h2></h3>
+    <h4>{{this.created_at}}</h4>
 
     {{#if this.OWNER}}
       <p>you <b>------POSTED-----</b> this one</p>
@@ -85,3 +86,6 @@
 </section>
 
 
+<footer>
+  
+</footer>

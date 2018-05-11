@@ -1,13 +1,121 @@
+
+
+
+
+/////////////////THIS IS THE NAME FOR THE CLASS FOR THE IMAGES BEING PULLED IN BY YELP!!!
+.business-img{
+  width: 150px;
+  height: 150px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 body {
-  padding: 50px;
+  width: 100%;
+  margin: 0 auto;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
 }
 
-a {
-  color: #00B7FF;
+// a {
+//   color: #00B7FF;
+// }
+
+// .tabbed{
+//   text-indent: 20px;
+//   margin: 0px;
+// }
+
+footer {
+  background-color: #F2F2F2;
+  width: 100%;
+  text-align: right;
+  padding: 23px;
 }
 
-.tabbed{
-  text-indent: 20px;
-  margin: 0px;
+ul {
+  list-style: none;
+  margin: 0;
+}
+ul li {
+  display: inline;
+}
+ul li a {
+  color: #ccc;
+  text-decoration: none;
+}
+ul li a:hover {
+  opacity: 0.65;
+}
+/* ======== General ===== */
+.gutter {
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* ======== FlexBox ====== */
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* ====== Navigation ===== */
+
+.navbar {
+  background: #323232;
+  width: 100%;
+  margin: 0 auto;
+  height: auto;
+  font-size: 17px;
+}
+
+.nav-container {
+  justify-content: space-around;
+  align-items: center;
+  height: 48px;
+  margin-bottom: 45px;
+}
+
+
+/* ======== HOME ==== */
+.hero-wrapper {
+  // margin-top: 25px;
+}
+
+.hero {
+  background-image: url(../images/icon-plate.png);
+  height: 500px;
+  background-size: 250px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.siteName {
+  margin: 0;
+  text-align: center;
+  font-size: 45px;
+}
+.hero-tagline {
+  text-align: center;
+  font-size: 21px;
+  font-weight: 300;
+}
+
+.about-block {
+  background-color: #F5F5F5;
+  height: 500px;
+}
+.next-block {
+    background-color: #ffffff;
+    height: 500px;
 }

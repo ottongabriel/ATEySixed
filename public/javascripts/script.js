@@ -17,6 +17,7 @@ $('#get-restaurants').click(function(event){
 
       $('.restaurant-list-container').empty();
       response.data.forEach(eachRestaurant => {
+        const thImage = eachRestaurant.image_url;
         const theName = eachRestaurant.name;
         const theAlias = eachRestaurant.alias;
         const thePhone = eachRestaurant.phone;
@@ -29,6 +30,7 @@ $('#get-restaurants').click(function(event){
         $('.restaurant-list-container').append(`
         
           <div class="restaurant-info">
+            <img class="business-img" src="${thImage}">
             <h2 class="name">Name: ${theName}</h2>
             <div class="alias">alias: ${theAlias}</div>
             <div class="phone">Phone number: ${thePhone}</div>
@@ -60,29 +62,6 @@ $('#get-restaurants').click(function(event){
 
 })
 ///////////////////////////////////////////GET RESTAURANTS END
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -89,6 +89,8 @@ router.get('/restaurant&&:id&&:name&&:alias&&:phone&&:address&&:city&&:zip', (re
       if(req.user){
         tipToAdd.loggedInUser = req.user._id;
       }
+
+
       data.tips.push(tipToAdd)
 
     });
@@ -96,12 +98,6 @@ router.get('/restaurant&&:id&&:name&&:alias&&:phone&&:address&&:city&&:zip', (re
     res.render('restaurant', data);
   })
   .catch(err=>console.log(err))
-
-
-
-
-
-
 
 
   
