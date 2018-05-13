@@ -1,6 +1,19 @@
 
 $(document).ready(function(){
   console.log("yut");
+
+
+//////////////////////////activate restaurant search form by pressing enter
+$('.restaurant-search-form').keydown(function(event) {
+  if ( event.which == 13 ) {
+    $('#get-restaurants').click();
+   }
+})
+
+
+
+
+
   
   
 ////////////////////////////////////////////GET RESTAURANTS CLICK
