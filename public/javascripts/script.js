@@ -1,11 +1,5 @@
 
 $(document).ready(function(){
-  console.log("yut");
-
-
-
-
-
 
 
 
@@ -14,7 +8,7 @@ $(document).ready(function(){
   
 ////////////////////////////////////////////GET RESTAURANTS CLICK
 $('#get-restaurants').click(function(event){
-  console.log("hllo");
+
 
   const theTerm = $('#restaurant-name').val();
   const theLocation = $('#location').val();
@@ -24,25 +18,49 @@ $('#get-restaurants').click(function(event){
     .then((response) => {
       console.log('response.data: ', response.data);
 
-
+      // make sure the container is empty
       $('.restaurant-list-container').empty();
-      response.data.forEach(eachRestaurant => {
-        const thImage = eachRestaurant.image_url;
-        const theName = eachRestaurant.name;
-        const theAlias = eachRestaurant.alias;
-        const thePhone = eachRestaurant.phone;
-        const theAddress = eachRestaurant.location.address1;
-        const theCity = eachRestaurant.location.city;
-        const theZipCode = eachRestaurant.location.zip_code;
-        const theId = eachRestaurant.id;
+      // find out how many items we got in the response
+      const totalItemsInResponse = response.data.length;
 
+      // open a placeholder for the html that we will add to the page
+      let html = ``;
 
-        $('.restaurant-list-container').append(`
+      // for every item we got in the response
+      for(let i = 0; i < totalItemsInResponse; i++){
+        
 
-        <div class="col-sm-4 ogf-margin-5">
+        // for all multiples of 3
+        if(i % 3 === 0){
+          // if it is not the first one
+          if(i !== 0){
+            // close the previous row
+            html += `</div>`;
+          }
+          // otherwise, open the row
+          html += `<div class="row">`;
+          console.log('i: ', i);
+        }
+        
+        // placeholder for the current data
+        const currentData = response.data[i];
+
+        // make shorter placeholders for the date we will need in the html
+        const theImage = currentData.image_url;
+        const theName = currentData.name;
+        const theAlias = currentData.alias;
+        const thePhone = currentData.phone;
+        const theAddress = currentData.location.address1;
+        const theCity = currentData.location.city;
+        const theZipCode = currentData.location.zip_code;
+        const theId = currentData.id;
+
+        // populate the html
+        html +=
+        `<div class="col-sm-4 ogf-margin-5">
         
           <div class="restaurant-info">
-            <img class="business-img" src="${thImage}">
+            <img class="business-img" src="${theImage}">
             <h2 class="name">${theName}</h2>
             <div class="phone">Phone number: ${thePhone}</div>
             <div class="address">Address:
@@ -60,15 +78,21 @@ $('#get-restaurants').click(function(event){
 
           </br></br>
 
-        </div>
-        
-        `)
+        </div>`
 
+        // if the last item is not a multiple of 3
+        if(i === totalItemsInResponse - 1 && i % 3 !== 0){
+          // the the last "row" needs to be closed
+          html += `</div>`;
+        }// this is because multiples of 3 are already closed above
+
+        
         // /restaurant/${theId}/${theName}/${theAlias}/${thePhone}/${theAddress}/${theCity}/${theZipCode}
         
-      });//endforeach
-    
-    })//endthen
+      }//end of iteration through every item in response
+      
+      $('.restaurant-list-container').append(html);
+    })//end.then
     .catch(err=>console.log(err))//youcantusenextherebecausethisisnotroutercode
 
 
@@ -88,9 +112,12 @@ $('.restaurant-search-form').keydown(function(event) {
   }
 })
 
-
-
 //////////////////////////////////////////////////////GET RESTAURANTS END
+
+
+
+
+
 
 
 
@@ -149,8 +176,5 @@ function handleCorroboration(theTipId){
     console.log('EDIT SUCCESS! response: ', response);
   })
   .catch(err=>console.log(err))
-
-
-
 
 }
