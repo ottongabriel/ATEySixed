@@ -3,12 +3,8 @@ $(document).ready(function(){
   console.log("yut");
 
 
-//////////////////////////activate restaurant search form by pressing enter
-$('.restaurant-search-form').keydown(function(event) {
-  if ( event.which == 13 ) {
-    $('#get-restaurants').click();
-   }
-})
+
+
 
 
 
@@ -18,6 +14,7 @@ $('.restaurant-search-form').keydown(function(event) {
   
 ////////////////////////////////////////////GET RESTAURANTS CLICK
 $('#get-restaurants').click(function(event){
+  console.log("hllo");
 
   const theTerm = $('#restaurant-name').val();
   const theLocation = $('#location').val();
@@ -76,7 +73,24 @@ $('#get-restaurants').click(function(event){
 
 
 })
-///////////////////////////////////////////GET RESTAURANTS END
+
+///////////////////////////makes the search automaticaly on going back
+if ($(".restaurant-search-form").length > 0){
+  if($('#restaurant-name').val() !== "" && $('#location').val() !== ""){
+    $('#get-restaurants').click();
+  }
+}
+
+//////////////////////////activate restaurant search form by pressing enter
+$('.restaurant-search-form').keydown(function(event) {
+  if ( event.which == 13 ) {
+    $('#get-restaurants').click();
+  }
+})
+
+
+
+//////////////////////////////////////////////////////GET RESTAURANTS END
 
 
 
