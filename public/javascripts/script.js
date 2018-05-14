@@ -128,16 +128,8 @@ $('.restaurant-search-form').keydown(function(event) {
 
 
 $(".corroborate").on("click", function(){
-  // console.log($(this).attr("tipid"))
-  // console.log($(this).attr("ownerid"))
 
   const tipId = $(this).attr("tipid")
-  // const ownerId = $(this).attr("ownerid")
-
-
-  //deactivate clicks on the button
-  // $(".corroborate").off();
-
 
   $(this).toggleClass("btn-warning btn-danger")
 
@@ -157,24 +149,18 @@ $(".corroborate").on("click", function(){
     // take one away from counter
     let num = +$(`[fortip='${tipId}']`).text() - 1;
     $(`[fortip='${tipId}']`).text(num);
-
   }
-  // ownerId => took this out of the string to test
-  handleCorroboration(tipId);
-})
 
-// theOwnerId => took this out
-function handleCorroboration(theTipId){
 
-  // make call to database and see if we have a corroborate
-  // to create one or edit one if necessary
-  // whether call is succesful or not, reactivate button
 
-  // ${theOwnerId} => took this out 
-  axios.post(`/corroboration/${theTipId}`,{})
+  axios.post(`/corroboration/${tipId}`,{})
   .then(response=>{
     console.log('EDIT SUCCESS! response: ', response);
   })
   .catch(err=>console.log(err))
 
-}
+
+
+
+})
+

@@ -3,24 +3,14 @@ $(function () {
 
 
 $(".corroboration-counter").each(function( index, elem ) {
-    // this: the current, raw DOM element
-    // index: the current element's index in the selection
-    // elem: the current, raw DOM element (same as this)
-
-    // if (index % 2 === 0){
-    //     $( elem ).text("yo");
-    // }
 
     const loggedInUserId = $("#logged-in-user-id").attr("theid")
-    console.log('loggedInUserId: ', loggedInUserId);
 
 
     const theTipId = $( elem ).attr("fortip")
 
     axios.get(`/get-corroborations/${theTipId}`)
       .then(corroborations =>{
-        console.log('corroborations: ', corroborations);
-
 
         corroborations.data.forEach(corroboration => {
           if (corroboration.corroborated === true){

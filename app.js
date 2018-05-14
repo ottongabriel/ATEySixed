@@ -115,5 +115,8 @@ app.use('/', passportRouter);
 const restaurantRouter = require("./routes/restaurantRouter");
 app.use('/', restaurantRouter)
 
+const tipCorrobRouter = require("./routes/tipCorrobRouter");
+app.use('/', tipCorrobRouter)
+
 
 module.exports = app;
