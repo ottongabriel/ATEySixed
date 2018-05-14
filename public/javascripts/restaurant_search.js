@@ -1,18 +1,24 @@
 
 $(document).ready(function(){
+// DOCUMENT READY BEGIN
 
 
 ////////////////////////////////////////////GET RESTAURANTS CLICK
 $('#get-restaurants').click(function(event){
 
-
+  // retrive the values to pass to the Yelp API
   const theTerm = $('#restaurant-name').val();
   const theLocation = $('#location').val();
 
+  // if either of the values are empty
+  if (theTerm === "" || theLocation === ""){
+    // don't go any further
+    return;
+  }
 
+  // make a call to the route that will call the Yelp API
   axios.get(`/search/restaurants/${theTerm}/${theLocation}`)
     .then((response) => {
-      console.log('response.data: ', response.data);
 
       // make sure the container is empty
       $('.restaurant-list-container').empty();
@@ -25,7 +31,6 @@ $('#get-restaurants').click(function(event){
       // for every item we got in the response
       for(let i = 0; i < totalItemsInResponse; i++){
         
-
         // for all multiples of 3
         if(i % 3 === 0){
           // if it is not the first one
@@ -35,7 +40,6 @@ $('#get-restaurants').click(function(event){
           }
           // otherwise, open the row
           html += `<div class="row">`;
-          console.log('i: ', i);
         }
         
         // placeholder for the current data
@@ -81,18 +85,15 @@ $('#get-restaurants').click(function(event){
           // the the last "row" needs to be closed
           html += `</div>`;
         }// this is because multiples of 3 are already closed above
-
-        
-        // /restaurant/${theId}/${theName}/${theAlias}/${thePhone}/${theAddress}/${theCity}/${theZipCode}
         
       }//end of iteration through every item in response
       
+      // after every item in the response has been added to the html placeholder, add it to the HTML on the page
       $('.restaurant-list-container').append(html);
     })//end.then
-    .catch(err=>console.log(err))//youcantusenextherebecausethisisnotroutercode
+    .catch(err=>console.log(err))
 
-
-})
+})// GET RESTAURANTS CLICK END
 
 ///////////////////////////makes the search automaticaly on going back
 if ($(".restaurant-search-form").length > 0){
@@ -111,59 +112,4 @@ $('.restaurant-search-form').keydown(function(event) {
 //////////////////////////////////////////////////////GET RESTAURANTS END
 
 
-
-
-
-
-
-
-
-
 })// END DOCUMENT READY 
-
-
-
-$(".corroborate").on("click", function(){
-
-  if($(this).hasClass("not-finished")){
-    return;
-  }
-
-  $(this).addClass("not-finished");
-
-  const tipId = $(this).attr("tipid")
-
-  $(this).toggleClass("btn-warning btn-danger")
-
-  const buttonInnerText = $(this).text();
-  // swap text
-  if(buttonInnerText === "Is it True?"){
-    $(this).text("It is True!!!")
-
-    // add one to counter
-    let num = +$(`[fortip='${tipId}']`).text() + 1;
-    $(`[fortip='${tipId}']`).text(num);
-
-  }
-  else{
-    $(this).text("Is it True?")
-
-    // take one away from counter
-    let num = +$(`[fortip='${tipId}']`).text() - 1;
-    $(`[fortip='${tipId}']`).text(num);
-  }
-
-
-
-  axios.post(`/corroboration/${tipId}`,{})
-  .then(response=>{
-    console.log('EDIT SUCCESS! response: ', response);
-    
-  })
-  .catch(err=>console.log(err))
-
-
-
-
-})
-

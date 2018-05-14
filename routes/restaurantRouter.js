@@ -10,8 +10,7 @@ const yelp           = require('yelp-fusion');
 
 
 
-
-/* GET home page */
+// ROUTE TO THE PAGE TO SEARCH RESTAURANTS
 router.get('/restaurant-search', (req, res, next) => {
   const data = {};
   // if a user is logged in
@@ -23,9 +22,8 @@ router.get('/restaurant-search', (req, res, next) => {
 });
 
 
-
+// ROUTE THAT HANDLES THE CALL TO THE YELP API
 router.get('/search/restaurants/:theTerm/:theLocation', (req,res,next) =>{
-
 
   const apiKey = process.env.API_KEY;
   
@@ -50,9 +48,7 @@ router.get('/search/restaurants/:theTerm/:theLocation', (req,res,next) =>{
 })
 
 
-
-
-// /restaurant/:id/:name/:alias/:phone/:address/:city/:zip
+// ROUTE TO NAVIGATE TO INDIVIDUAL RESTAURANT PAGE
 router.get('/restaurant&&:id&&:name&&:alias&&:phone&&:address&&:city&&:zip', (req, res, next) => {
   const data = {};
   // if a user is logged in
@@ -67,9 +63,6 @@ router.get('/restaurant&&:id&&:name&&:alias&&:phone&&:address&&:city&&:zip', (re
   data.restaurantAddress = req.params.address;
   data.restaurantCity = req.params.city;
   data.restaurantZipCode = req.params.zip;
-
-
-
 
 
 //FINDING ALL TIPS NOW, NEED TO MAKE IT SO THAT THEY ARE ONLY THE ONES FROM THIS RESTAURANT.
@@ -90,23 +83,14 @@ router.get('/restaurant&&:id&&:name&&:alias&&:phone&&:address&&:city&&:zip', (re
         tipToAdd.loggedInUser = req.user._id;
       }
 
-
       data.tips.push(tipToAdd)
-
     });
 
     res.render('restaurant', data);
   })
   .catch(err=>console.log(err))
 
-
-  
-
-
-});
-
-
-
+});// PATH TO INDIVIDUAL RESTAURANT PAGE END
 
 
 module.exports = router;
