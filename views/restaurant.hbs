@@ -79,7 +79,8 @@
             <div class="card-body">
               <h4>they were out of:</h4>
               <h2 class="card-title">{{this.item}}</h2>
-              <p class="card-text">{{this.created_at}}</p>
+              <p class="card-text">at {{this.time}}</p>
+              <p class="card-text">on {{this.date}}</p>
 
               {{#if this.OWNER}}
                 <form action="/delete-tip/{{this._id}}" method="POST">

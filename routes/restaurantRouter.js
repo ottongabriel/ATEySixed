@@ -83,6 +83,12 @@ router.get('/restaurant&&:id&&:name&&:alias&&:phone&&:address&&:city&&:zip', (re
         tipToAdd.loggedInUser = req.user._id;
       }
 
+      const theDate = tipToAdd.created_at.toDateString();
+      const theTime = tipToAdd.created_at.toTimeString();
+
+      tipToAdd.date = theDate;
+      tipToAdd.time = theTime;
+
       data.tips.push(tipToAdd)
     });
 
