@@ -63,14 +63,6 @@ router.post("/login", passport.authenticate("local", {
 
 
 
-
-
-
-// PRIVATE PAGE
-router.get("/private-page", ensureLogin.ensureLoggedIn(), (req, res) => {
-  res.render("passport/private", { user: req.user });
-});
-
 // LOGOUT
 router.get("/logout", (req, res) => {
   req.logout();

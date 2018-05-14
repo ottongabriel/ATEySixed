@@ -2,10 +2,6 @@
 $(document).ready(function(){
 
 
-
-
-  
-  
 ////////////////////////////////////////////GET RESTAURANTS CLICK
 $('#get-restaurants').click(function(event){
 
@@ -129,6 +125,12 @@ $('.restaurant-search-form').keydown(function(event) {
 
 $(".corroborate").on("click", function(){
 
+  if($(this).hasClass("not-finished")){
+    return;
+  }
+
+  $(this).addClass("not-finished");
+
   const tipId = $(this).attr("tipid")
 
   $(this).toggleClass("btn-warning btn-danger")
@@ -156,6 +158,7 @@ $(".corroborate").on("click", function(){
   axios.post(`/corroboration/${tipId}`,{})
   .then(response=>{
     console.log('EDIT SUCCESS! response: ', response);
+    
   })
   .catch(err=>console.log(err))
 
