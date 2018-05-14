@@ -74,10 +74,20 @@ router.post('/add-new-tip', ensureLogin.ensureLoggedIn(), (req, res, next) => {
 // DELET TIP BY ID
 router.post('/delete-tip/:id', (req, res, next) => {
 
-  Tip.findByIdAndRemove(req.params.id)
+  const theTipId = req.params.id;
+
+  Tip.findByIdAndRemove(theTipId)
     .then(theTip=>{
-      // refresh the page to show that the tip was indeed deleted
-      res.redirect('back');
+      // remove all the corroborations associated with that tip
+      Corroboration.remove({tip_id: theTipId})
+      .then(theCorrob =>{
+        // refresh the page to show that the tip was indeed deleted
+        res.redirect('back');
+      })
+      .catch(err=>{
+        console.log('err: ', err);
+        next(err);
+      })
     })
     .catch(err=>{
       console.log('err: ', err);
