@@ -6,76 +6,60 @@
         <div class="col-sm-8 col-sm-offset-2">
 
 
-<div class="restaurant-info">
-  <h1 class="name">{{restaurantName}}</h1>
-  {{!-- <div class="alias">Alias: {{restaurantAlias}}</div> --}}
-  <h4>
-    <div class="address">Address:
-      <p class="tabbed">{{restaurantAddress}}</p>
-      <p class="tabbed">{{restaurantCity}}</p>
-      <p class="tabbed">{{restaurantZipCode}}</p>
-      <div class="phone">Phone number: {{restaurantPhone}}</div>
-    </div>
-  </h4>
-  {{!-- <div class="the_id">{{restaurantId}}</div> --}}
-</div>
+          <div class="restaurant-info">
+            <h1 class="name">{{restaurantName}}</h1>
+            <h4>
+              <div class="address">Address:
+                <p class="tabbed">{{restaurantAddress}}</p>
+                <p class="tabbed">{{restaurantCity}}</p>
+                <p class="tabbed">{{restaurantZipCode}}</p>
+                <div class="phone">Phone number: {{restaurantPhone}}</div>
+              </div>
+            </h4>
+          </div>
 
-<div class="on-single-restaurant-page">
-  <div class="tip-container">
+          {{#if user}}
+            <h2>Add a tip!</h2>
 
-  </div>
+            <form action="/add-new-tip" method="POST" id="form-container">
+              <div>
+                <label for="item">Item they are out of</label>
+                <input id="item" type="text" name="item" placeholder="French fries" maxlength="25">  
+                <input type="hidden" name="the_id" value={{restaurantId}}>
+              </div>
+              <br>
 
-</div>
+              {{#if message}}
+                <br>
+                <div class="error-message">{{ message }}</div>
+              {{/if}}
 
+              <br><br>
 
+              <button class="btn btn-info">Add tip</button>
 
-  {{#if user}}
-  <h2>Add a tip!</h2>
-
-  <form action="/add-new-tip" method="POST" id="form-container">
-    <div>
-      <label for="item">Item they are out of</label>
-      <input id="item" type="text" name="item" placeholder="French fries" maxlength="25">  
-      <input type="hidden" name="the_id" value={{restaurantId}}>
-    </div>
-    <br>
-
-    {{#if message}}
-      <br>
-      <div class="error-message">{{ message }}</div>
-    {{/if}}
-
-    <br><br>
-
-    <button class="btn btn-info">Add tip</button>
-
-  </form>
-  {{/if}}
+            </form>
+          {{/if}}
 
 
-  {{#unless user}}
-    <br><br><br>
-  
-    <h3 class="text-center">Do you know something we don't? </h3>
-    <h3 class="text-center"><a href="/signup">Make an Account</a> and let us know!</h3>
-    
-  {{/unless}}
-
-
-
+          {{#unless user}}
+            <br><br><br>
+          
+            <h3 class="text-center">Do you know something we don't? </h3>
+            <h3 class="text-center"><a href="/signup">Make an Account</a> and let us know!</h3>
+            
+          {{/unless}}
 
         </div>
     </div>
 </div>
-{{!-- end bootstrap container --}}
-
-
 
 
 <section class="tip-business">
+  
 
   {{#if tips}}
-  <h1 class="text-center ogf-margin-5">All tips</h1>
+    <h1 class="text-center ogf-margin-5">All tips</h1>
   {{/if}}
 
   {{#unless tips}}
@@ -86,26 +70,22 @@
   <div class="container">
     <div class="row">
 
-  {{#each tips}}
+      {{#each tips}}
 
 
         <div class="col-sm-4 ogf-margin-5">
 
           <div class="card" style="width: 60rem;">
-            {{!-- <img class="card-img-top" src="..." alt="Card image cap"> --}}
             <div class="card-body">
               <h4>they were out of:</h4>
               <h2 class="card-title">{{this.item}}</h2>
               <p class="card-text">{{this.created_at}}</p>
 
-
               {{#if this.OWNER}}
-              {{!-- <p>you <b>------POSTED-----</b> this one</p> --}}
-              <form action="/delete-tip/{{this._id}}" method="POST">
-                <button class="btn btn-primary">Delete tip</button>
-              </form>
+                <form action="/delete-tip/{{this._id}}" method="POST">
+                  <button class="btn btn-primary">Delete tip</button>
+                </form>
               {{/if}}
-
 
 
               {{#unless this.OWNER}}
@@ -129,18 +109,10 @@
         </div>
 
 
-
-
-
-  {{/each}}
-
+      {{/each}}
 
     </div>
   </div>
 
 
-
-
-
 </section>
-

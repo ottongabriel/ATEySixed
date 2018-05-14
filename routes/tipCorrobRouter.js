@@ -10,7 +10,6 @@ const ensureLogin    = require("connect-ensure-login");
 
 
 
-
 // ADD NEW TIP
 // IT AUTOMATICALLY CREATES A CORROBORATION THAT WILL HAVE THE SAME OWNER AS THE NEW TIP
 router.post('/add-new-tip', ensureLogin.ensureLoggedIn(), (req, res, next) => {
@@ -25,36 +24,44 @@ router.post('/add-new-tip', ensureLogin.ensureLoggedIn(), (req, res, next) => {
   }
   // otherwise
   else{
-    // don't save anything
+    // keep it blank
     owner_id = "";
   }
+
+  // if no item was entered in the field
   if (item === "") {
+    // don't go any further
     return;
   }
 
+  // build the new tip with the data passed in
   const newTip = new Tip({
     item: item,
     restaurant_id: the_id,
     owner_id: owner_id,
     });
 
+  // and save it
   newTip.save( (err) => {
     if (err) {
       res.render("restaurant", { message: "Something went wrong adding your tip" });
     } 
+    // if it was saved succesfully
     else {
+      // prepare a ne corroboration for the new tip
       const newCorroboration = new Corroboration({
         corroborated: true,
         tip_id: newTip._id,
         owner_id: newTip.owner_id,
       })
 
+      // and save it
       newCorroboration.save((err) => {
         if (err) {
-          //resrender problem here
           res.render("restaurant", { message: "Something went wrong adding the CORROBORATION for your tip" });
         }
         else{
+          // with both the tip and the corroboration saved, refresh the page to display the latest information
           res.redirect('back');
         }
       })
@@ -69,8 +76,7 @@ router.post('/delete-tip/:id', (req, res, next) => {
 
   Tip.findByIdAndRemove(req.params.id)
     .then(theTip=>{
-      // console.log('theTip: ', theTip);
-      // res.json(theTip)
+      // refresh the page to show that the tip was indeed deleted
       res.redirect('back');
     })
     .catch(err=>{
@@ -88,7 +94,7 @@ router.post('/corroboration/:tip_id', ensureLogin.ensureLoggedIn(), (req, res, n
   const tipId = req.params.tip_id;
   const ownerId = req.user._id;
   
-  // Find the first corroboration that matcheds the id of the tip being looked and has the same owner as the user currently logged ins
+  // Find the first corroboration that matcheds the id of the tip being looked at and has the same owner as the user currently logged in
   Corroboration.findOne(
     { 
       $and: [ 
@@ -102,31 +108,42 @@ router.post('/corroboration/:tip_id', ensureLogin.ensureLoggedIn(), (req, res, n
     // the corroboratio relationship already exists
     if (theCorroboration !== null) {
 
+      // swap the value in the database
       theCorroboration.corroborated = !theCorroboration.corroborated;
 
+      // and save the change
       theCorroboration.save((error) => {
         if (error) {
           res.redirect("back", { message: "the tip exists, but there was an issue updating it" });
         }
+        else{
+          // send response to indicate to the caller that the call was succesful
+          res.send()
+        }
       })
-
       return;
     }
     // then it doesnt exist and it needs to be created
-
-    const newCorroboration = new Corroboration({
-      corroborated: true,
-      tip_id: tipId,
-      owner_id: ownerId,
-    });
-
-    newCorroboration.save((error) => {
-      if (error) {
-        //resrender problem here
-        res.redirect("back", { message: "Something went wrong adding the CORROBORATION for that tip" });
-      }
-    })
-
+    else{
+      // create the corroboration
+      const newCorroboration = new Corroboration({
+        corroborated: true,
+        tip_id: tipId,
+        owner_id: ownerId,
+      });
+  
+      // and save it
+      newCorroboration.save((error) => {
+        if (error) {
+          res.redirect("back", { message: "Something went wrong adding the CORROBORATION for that tip" });
+        }
+        else{
+          // send response to indicate to the caller that the call was succesful
+          res.send()
+        }
+      })
+      return
+    }
   })
   .catch(err=>{
     console.log("there was an issue");
@@ -140,7 +157,6 @@ router.get('/get-corroborations/:tipId', (req, res, next) => {
 
   Corroboration.find({tip_id: req.params.tipId})
   .then(theList=>{
-    // need to pass multiple things here
     res.json(theList)
   })
   .catch(err=>console.log(err))
